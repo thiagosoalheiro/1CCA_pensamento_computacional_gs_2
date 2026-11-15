@@ -7,10 +7,8 @@ from base_conhecimento import BaseConhecimento
 
 PASTA = os.path.dirname(os.path.abspath(__file__))
 
-
 def caminho(*partes):
     return os.path.join(PASTA, *partes)
-
 
 def main():
     base = BaseConhecimento(caminho("data", "base_conhecimento.json"))
@@ -49,7 +47,6 @@ def main():
         else:
             assistente.encerrar()
             break
-
 
 if __name__ == "__main__":
     main()
