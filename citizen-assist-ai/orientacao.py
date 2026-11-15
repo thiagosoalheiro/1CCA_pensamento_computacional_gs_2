@@ -1,12 +1,9 @@
-"""representa UM registro da base de conhecimento (um item do JSON)."""
-
 import textwrap
 
 AVISO = "Aviso: este assistente NÃO é um canal oficial. Confirme a informação no órgão responsável."
 
-
 class Orientacao:
-    """Guarda os dados de uma orientação e sabe se exibir na tela."""
+    """Guarda os dados de uma orientação e se exibe na tela."""
 
     CAMPOS_OBRIGATORIOS = ("id", "categoria", "titulo", "palavras_chave", "resposta",
                            "documentos", "onde", "fonte", "verificado_em")
@@ -17,14 +14,14 @@ class Orientacao:
         self.id = id
         self.categoria = categoria
         self.titulo = titulo
-        self.palavras_chave = palavras_chave      # lista de strings
+        self.palavras_chave = palavras_chave # lista de strings
         self.resposta = resposta
-        self.documentos = documentos              # lista de strings
+        self.documentos = documentos # lista de strings
         self.onde = onde
         self.fonte = fonte
         self.verificado_em = verificado_em
-        # Campos extras do Bridge AI, usados pelo módulo "Vale a viagem?":
-        self.exige_presenca = exige_presenca      # True = precisa ir; False = dá para resolver à distância
+        # módulo "Vale a viagem?":
+        self.exige_presenca = exige_presenca # True = precisa ir; False = dá para resolver à distância
         self.alternativa_remota = alternativa_remota
 
     @classmethod
@@ -51,7 +48,7 @@ class Orientacao:
         )
 
     def exibir(self):
-        """Mostra a orientação na tela: resposta, documentos, onde, fonte, data e aviso."""
+        """Mostra a orientação na tela: resposta, documentos, onde, fonte, data e aviso..."""
         print(f"\n>> {self.titulo} [{self.categoria}]")
         print(textwrap.fill(self.resposta, width=90))
         print("Documentos necessários:")
