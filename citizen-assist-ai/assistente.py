@@ -1,4 +1,4 @@
-"""Classe Assistente: conversa com o cidadão, guarda o histórico e calcula os indicadores."""
+"""Conversa com o cidadão, guarda o histórico e calcula os indicadores."""
 
 import csv
 import json
@@ -12,19 +12,16 @@ from base_conhecimento import LIMIAR_ALTA, LIMIAR_MEDIA
 CAMPOS_CSV = ["data", "origem", "pergunta", "id_orientacao", "encontrou", "ajudou",
               "tentativas", "tempo_segundos", "viagem_evitada", "sessao", "nota_facilidade"]
 
-
 def _entrada(mensagem):
     try:
         return input(mensagem).strip()
     except EOFError:
         return None
 
-
 def ler_texto(mensagem):
     """Lê um texto. Se a entrada fechar, devolve '0' (voltar)."""
     texto = _entrada(mensagem)
     return "0" if texto is None else texto
-
 
 def ler_sn(mensagem):
     while True:
@@ -36,7 +33,7 @@ def ler_sn(mensagem):
             return True
         if resposta in ("n", "nao", "não"):
             return False
-        print("  Entrada inválida. Digite s (sim) ou n (não).")
+        print("Entrada inválida. Digite s (sim) ou n (não).")
 
 
 def ler_opcao(mensagem, minimo, maximo, se_acabar_a_entrada=0):
@@ -47,21 +44,23 @@ def ler_opcao(mensagem, minimo, maximo, se_acabar_a_entrada=0):
         try:
             valor = int(resposta)
         except ValueError:
-            print(f"  Opção inválida. Digite um número de {minimo} a {maximo}.")
+            print(f"Opção inválida. Digite um número de {minimo} a {maximo}.")
             continue
         if minimo <= valor <= maximo:
             return valor
-        print(f"  Opção fora da faixa. Digite um número de {minimo} a {maximo}.")
+        print(f"Opção fora da faixa. Digite um número de {minimo} a {maximo}.")
 
 
 def contem_dado_pessoal(texto):
-    """Bloqueio de 8 ou mais dígitos (CPF, telefone...) ou o sinal @ (e-mail)."""
+    """Bloqueia as respostas de 8 ou mais dígitos (CPF, telefone...) ou o sinal @ (e-mail)."""
     quantidade_de_digitos = sum(1 for caractere in texto if caractere.isdigit())
     return quantidade_de_digitos >= 8 or "@" in texto
 
 
-# Lógica booleana do "Vale a viagem?"
-
+# Lógica booleana do "Vale a viagem?" que pegamos da matéria Computer Science
+# Toda a lógica foi construida no desafio proposto da matéria, desde as variaveis booleanas até o mapa de karnaught
+# O assunto e a lógica cabem perfeitamente na nossa ideia principal do projeto Bridge AI
+# Se quiser saber mais, está explicando no nosso README
 
 def regra_vale_a_viagem(P, D, U):
     """S = P · (D + U)
@@ -79,12 +78,12 @@ class Assistente:
         self.base = base
         self.caminho_historico = caminho_historico
         self.caminho_csv = caminho_csv
-        self.sessao = datetime.now().strftime("%Y-%m-%d %H:%M:%S")   # identifica esta execução
+        self.sessao = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # identifica esta execução
         self.atendimentos_da_sessao = 0
         self.historico = self._carregar_historico()
 
     def _carregar_historico(self):
-        """Lê data/historico.json"""
+        """le data/historico.json"""
         try:
             with open(self.caminho_historico, encoding="utf-8") as arquivo:
                 dados = json.load(arquivo)
@@ -113,19 +112,19 @@ class Assistente:
 
     def registrar(self, origem, pergunta, id_orientacao, encontrou, ajudou,
                   tentativas, tempo, viagem_evitada):
-        """Vai guardar um atendimento em data/historico.json"""
+        """guarda um atendimento em data/historico.json"""
         atendimento = {
             "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "origem": origem,                    # "pergunta" ou "categoria"
+            "origem": origem,
             "pergunta": pergunta,
             "id_orientacao": id_orientacao,
             "encontrou": encontrou,
             "ajudou": ajudou,
             "tentativas": tentativas,
             "tempo_segundos": tempo,
-            "viagem_evitada": viagem_evitada,    # True / False / None (se não encontrou)
+            "viagem_evitada": viagem_evitada, # True / False / None (se não encontrou)
             "sessao": self.sessao,
-            "nota_facilidade": None,             # preenchida ao sair
+            "nota_facilidade": None, # preenchida ao sair, ajuda na avaliacao do projeto
         }
         self.historico.append(atendimento)
         self.atendimentos_da_sessao += 1
@@ -148,13 +147,13 @@ class Assistente:
                 print("  Resposta vazia. Escreva sua dúvida ou digite 0 para voltar.")
                 continue
             if contem_dado_pessoal(texto):
-                # Não conta como tentativa e NÃO é registrada.
+                # Não conta como tentativa e NÃO é registrada no sistema
                 print("Atenção: não digite CPF, telefone ou e-mail. Reescreva.")
                 continue
 
             tentativas += 1
             ultima_pergunta = texto
-            resultados = self.base.buscar(texto)   # lista de tuplas (pontos, orientacao)
+            resultados = self.base.buscar(texto) # lista de tuplas (pontos, orientacao)
 
             if not resultados or resultados[0][0] < LIMIAR_MEDIA:
                 self._mostrar_nao_encontrei()
@@ -174,7 +173,8 @@ class Assistente:
             print("Tente outras palavras, por exemplo: " + ", ".join(f"'{e}'" for e in exemplos) + ".")
         print("Ou use a navegação por categorias (opção 2 do menu): " + ", ".join(self.base.categorias()) + ".")
 
-    # ----- navegação por categorias -----
+
+    # navegação por categorias
 
     def navegar(self):
         categorias = self.base.categorias()
@@ -219,7 +219,7 @@ class Assistente:
             print("Tente reescrever a dúvida com outras palavras ou use a navegação por categorias.")
 
     def vale_a_viagem(self, orientacao):
-        """Devolve True se a viagem foi evitada."""
+        """Irá devolver True se a viagem foi evitada."""
         print("\n--- Vale a viagem? ---")
         P = orientacao.exige_presenca
         if not P:
@@ -238,8 +238,6 @@ class Assistente:
             return False
         print("Não vá ainda: reúna os documentos antes de se deslocar, para não perder a viagem.")
         return True
-
-    # indicadores e CSV
 
     def indicadores(self):
         total = len(self.historico)
