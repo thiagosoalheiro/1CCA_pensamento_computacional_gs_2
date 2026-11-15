@@ -1,10 +1,9 @@
-"""Classe BaseConhecimento: lê o JSON, lista categorias e busca a melhor orientação por pontuação."""
+"""Irá ler o JSON, listar categorias e buscar a melhor orientação por pontuação."""
 
 import json
 
 from orientacao import Orientacao
 
-# ---------- Regras de pontuação (explicadas no README e no vídeo) ----------
 PONTOS_PALAVRA_CHAVE = 3     # palavra-chave da orientação que aparece na pergunta
 PONTOS_PALAVRA_TITULO = 1    # palavra da pergunta (4+ letras) que aparece no título
 LIMIAR_ALTA = 6              # 6 pontos ou mais  -> confiança ALTA
@@ -13,12 +12,11 @@ LIMIAR_MEDIA = 3             # 3 a 5 pontos      -> confiança MÉDIA ; menos de
 ACENTOS = {"á": "a", "à": "a", "ã": "a", "â": "a", "é": "e", "ê": "e",
            "í": "i", "ó": "o", "õ": "o", "ô": "o", "ú": "u", "ç": "c"}
 
-# Palavras comuns que não ajudam a achar o assunto (ajuste da equipe, explicado no README):
-# elas não ganham o ponto extra do título.
+# Palavras comuns que não ajudam a achar o assunto:
+# elas não ganham o ponto extra do título
 PALAVRAS_COMUNS = {"como", "para", "fazer", "mais", "anos", "contra", "sobre", "quero",
                    "preciso", "pode", "onde", "qual", "quais", "tenho", "minha", "pelo",
                    "pela", "esse", "essa", "isso", "esta", "este", "isto", "quando"}
-
 
 def normalizar(texto):
     """Minúsculas, sem acentos e sem pontuação. Devolve com um espaço nas pontas,
@@ -30,7 +28,6 @@ def normalizar(texto):
         texto = texto.replace(sinal, " ")
     return " " + " ".join(texto.split()) + " "
 
-
 class BaseConhecimento:
 
     def __init__(self, caminho):
@@ -38,9 +35,7 @@ class BaseConhecimento:
         self.orientacoes = []
 
     def carregar(self):
-        """Lê o JSON e cria os objetos Orientacao.
-        Nunca derruba o programa: se o arquivo faltar ou estiver corrompido,
-        mostra uma mensagem e devolve False."""
+        """Lê o JSON e cria os objetos Orientacao."""
         self.orientacoes = []
         try:
             with open(self.caminho, encoding="utf-8") as arquivo:
@@ -79,7 +74,6 @@ class BaseConhecimento:
         return lista
 
     def por_categoria(self, categoria):
-        """edevolve as orientações de uma categoria."""
         return [o for o in self.orientacoes if o.categoria == categoria]
 
     def pontuar(self, pergunta, orientacao):
@@ -100,7 +94,7 @@ class BaseConhecimento:
         return pontos
 
     def buscar(self, pergunta):
-        """Devolve uma lista de tuplas (pontos, orientacao), da maior para a menor pontuação"""
+        """lista de tuplas (pontos, orientacao), da maior para a menor pontuação"""
         resultados = []
         for orientacao in self.orientacoes:
             pontos = self.pontuar(pergunta, orientacao)
