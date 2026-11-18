@@ -162,22 +162,21 @@ Todas as orientações foram conferidas em páginas oficiais em **11/11/2026** (
  
 ---
  
-## Teste com usuários  **[PREENCHER depois do teste]**
- 
-Mínimo: 3 pessoas de fora da equipe e 10 atendimentos. Não registrar nomes nem dados das pessoas.
- 
+## Teste com 3 usuários
+> Uma idosa de 90 anos, uma adulta de 50 anos e um jovem de 20 anos
+  
 | Indicador | Resultado |
 |---|---|
-| Atendimentos | [PREENCHER] |
-| Resposta encontrada (%) | [PREENCHER] |
-| Taxa de acerto (%) | [PREENCHER] |
-| Tempo médio para encontrar | [PREENCHER] |
-| Tentativas por atendimento | [PREENCHER] |
-| Facilidade de uso (1 a 5) | [PREENCHER] |
-| Orientações que evitaram uma viagem (%) | [PREENCHER] |
+| Atendimentos | 12 |
+| Resposta encontrada (%) | 75% |
+| Taxa de acerto (%) | 66.7% |
+| Tempo médio para encontrar | 18.4 segundos |
+| Tentativas por atendimento | 2 |
+| Facilidade de uso (1 a 5) | 4.8 |
+| Orientações que evitaram uma viagem (%) | 75.0% |
  
-**Dúvidas sem solução:** [PREENCHER]
-**Melhoria feita a partir do teste:** [PREENCHER] (ex.: nova palavra-chave no JSON)
+**Dúvidas sem solução:** Consulta sobre cidadania portuguesa (fora do escopo inicial de serviços nacionais/públicos cadastrados)
+**Melhoria feita a partir do teste:** Inclusão de novas palavras-chave e sinônimos populares no JSON da base de conhecimento (focando em termos informais de saúde e previdência para facilitar a busca dos usuários).
  
 ---
  
