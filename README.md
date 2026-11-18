@@ -164,7 +164,7 @@ Todas as orientações foram conferidas em páginas oficiais em **11/11/2026** (
  
 ## Teste com 3 usuários
 > Uma idosa de 90 anos, uma adulta de 50 anos e um jovem de 20 anos
-  
+ 
 | Indicador | Resultado |
 |---|---|
 | Atendimentos | 12 |
@@ -192,4 +192,5 @@ Todas as orientações foram conferidas em páginas oficiais em **11/11/2026** (
  
 ## 🎥 Vídeo técnico
  
-Link (YouTube, não listado): **[PREENCHER]**
+Link (YouTube, não listado): **https://youtu.be/LHWpss0u2NQ**
+ 
